@@ -3,9 +3,22 @@ const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
+
+// Initialize Google Gemini AI (if API key is available)
+let genAI = null;
+let geminiModel = null;
+if (process.env.GEMINI_API_KEY) {
+    genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    geminiModel = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    console.log('Google Gemini AI initialized');
+} else {
+    console.warn('GEMINI_API_KEY not found. AI feedback features will be disabled.');
+}
 
 // Middleware
 app.use(cors());
@@ -146,6 +159,65 @@ app.get('/api/submissions', (req, res) => {
             data: rows
         });
     });
+});
+
+// API endpoint to check if Gemini is available
+app.get('/api/gemini-status', (req, res) => {
+    res.json({
+        available: geminiModel !== null
+    });
+});
+
+// API endpoint to get AI feedback on form field
+app.post('/api/gemini-feedback', async (req, res) => {
+    if (!geminiModel) {
+        return res.status(503).json({
+            success: false,
+            message: 'AI feedback is not available. Please configure GEMINI_API_KEY.'
+        });
+    }
+
+    const { fieldName, fieldValue, fieldDescription } = req.body;
+
+    if (!fieldName || !fieldValue) {
+        return res.status(400).json({
+            success: false,
+            message: 'Missing required parameters: fieldName and fieldValue'
+        });
+    }
+
+    try {
+        const prompt = `You are helping review a project intake form for the Massachusetts Open Cloud (MOC).
+
+Field: ${fieldName}
+${fieldDescription ? `Description: ${fieldDescription}` : ''}
+
+User's input:
+${fieldValue}
+
+Provide brief, constructive feedback on this field entry. Consider:
+- Is it clear and specific enough?
+- Are there any missing details that would be helpful?
+- Does it align with typical MOC project requirements?
+- Any suggestions for improvement?
+
+Keep your feedback concise (2-4 sentences) and actionable.`;
+
+        const result = await geminiModel.generateContent(prompt);
+        const response = await result.response;
+        const feedback = response.text();
+
+        res.json({
+            success: true,
+            feedback: feedback
+        });
+    } catch (error) {
+        console.error('Gemini API error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error generating AI feedback: ' + error.message
+        });
+    }
 });
 
 // Start server

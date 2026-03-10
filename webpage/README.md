@@ -5,11 +5,12 @@ A web application for submitting MOC (Massachusetts Open Cloud) project intake f
 ## Features
 
 - Complete web form based on the MOC_Intake_Form template
-- Pre-filled example data to guide users
+- **Gray example text** that appears in empty fields and disappears when users add their own input
+- **Google Gemini AI integration** for intelligent feedback on form fields (optional)
 - Client-side JavaScript validation (all fields required)
 - SQLite database storage
 - RESTful API for form submission
-- Responsive design
+- Responsive design with sliding AI feedback panel
 
 ## Prerequisites
 
@@ -28,6 +29,18 @@ cd webpage
 npm install
 ```
 
+3. **(Optional)** Configure Google Gemini AI for feedback:
+   - Get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Copy `.env.example` to `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+   - Edit `.env` and add your API key:
+     ```
+     GEMINI_API_KEY=your_actual_api_key_here
+     ```
+   - If you skip this step, the application will work normally but AI feedback buttons will be hidden
+
 ## Running the Application
 
 1. Start the server:
@@ -41,6 +54,18 @@ http://localhost:3000
 ```
 
 3. The server will automatically create the SQLite database in the `../data/` directory on first run.
+
+## Using AI Feedback
+
+If you have configured a Google Gemini API key:
+
+1. Fill in any form field with your own content
+2. Click the **"Get AI Feedback"** button next to the field
+3. An AI feedback panel will slide in from the right with suggestions and recommendations
+4. Review the feedback and refine your input as needed
+5. Click the × button or click outside the panel to close it
+
+**Note:** AI feedback is only available for fields with actual user input (not example text).
 
 ## Project Structure
 
@@ -84,6 +109,36 @@ Retrieve all form submissions (optional endpoint for viewing).
 }
 ```
 
+### GET /api/gemini-status
+Check if Google Gemini AI is available.
+
+**Response:**
+```json
+{
+  "available": true
+}
+```
+
+### POST /api/gemini-feedback
+Get AI feedback on a form field.
+
+**Request Body:**
+```json
+{
+  "fieldName": "Project Name",
+  "fieldValue": "My Project",
+  "fieldDescription": "Brief description of the field"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "feedback": "AI-generated feedback text"
+}
+```
+
 ## Database Schema
 
 The `intake_forms` table contains the following fields:
@@ -121,6 +176,8 @@ The application uses:
 - **SQLite3** for database operations
 - **Body-parser** for parsing request bodies
 - **CORS** for cross-origin resource sharing
+- **Google Generative AI SDK** for AI-powered feedback (optional)
+- **dotenv** for environment variable management
 - Vanilla JavaScript for client-side functionality
 
 ## Stopping the Server
@@ -132,4 +189,10 @@ Press `Ctrl+C` in the terminal where the server is running.
 - The database file is stored in `../data/intake_forms.db`
 - The server runs on port 3000 by default
 - Form submissions are stored permanently in the database
-- The example data from the MOC_Intake_Form is pre-filled to guide users
+- **Example text behavior:**
+  - All fields display gray example text when empty
+  - Example text automatically disappears when you click into a field
+  - If you leave a field empty, the example text reappears
+  - Example text is not submitted with the form (fields must have real user input)
+- AI feedback requires a valid Google Gemini API key in the `.env` file
+- Without an API key, AI feedback buttons are automatically hidden

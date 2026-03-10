@@ -1,3 +1,18 @@
 *.nocommit
 *.swp
 
+# Environment variables
+webpage/.env
+
+# Database
+data/*.db
+data/*.db-journal
+
+# Node modules
+webpage/node_modules/
+
+# Build artifacts
+AGENT_TODO
+
+# Docker
+docker-compose.override.yml

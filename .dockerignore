@@ -1,0 +1,41 @@
+# Git files
+.git
+.gitignore
+
+# Node modules (will be installed in container)
+webpage/node_modules
+
+# Environment files
+webpage/.env
+.env
+
+# Database files (should be mounted as volume)
+data/*.db
+data/*.db-journal
+
+# Documentation
+webpage/README.md
+agent-reading-list/
+
+# Build artifacts
+AGENT_TODO
+
+# IDE and editor files
+*.swp
+*.swo
+*~
+.vscode
+.idea
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+*.nocommit
