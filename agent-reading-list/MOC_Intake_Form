@@ -1,0 +1,124 @@
+﻿Project Name 
+The Project Name should be concise, descriptive, and locally unique. You may be asked for a different name if a current project has a matching or confusingly similar name.
+TODO: if possible, link to list of current and past projects.
+
+
+Example: PseudoLavaLamp Diffusion Model Study
+
+
+
+
+Project Overview
+The Project Overview is one or two paragraphs that summarize what you want to do. Longer than an elevator pitch, shorter than a TED talk.
+
+
+Example: Multiple diffusion models will be used to generate video of lava lamps. This video will be compared with video of actual lava lamps. The same analysis stack and methodology will be applied to both data sets (generated, physical). This work will determine if virtual lava lamps are a reasonable source of entropy when compared with actual lava lamps.
+
+
+
+
+Project Administrative Information
+Who wants resources? What is the source budget? Who should be notified about charges, projections, and other administrative information?
+
+
+Example:
+Requestor: Robby Stahl - rstahl@redhat.com
+Funding: "867 - Five Three Oh Nine Investigations"
+Oversight: Robby Stahl (Red Hat), Orran Krieger (Red Hat)
+
+
+
+
+Project Timeline
+When do you want to start, when do you plan to end? Any constraints?
+
+
+Example: This project has a planned duration of one week. The start date must be on or before 2026-03-30.
+
+
+
+
+Technical Requirements
+This section must describe your technical requirements in detail. Categories to consider:
+* general description
+* runtime environment (bare metal, container)
+* hardware (GPUs, accelerators, instruction set)
+* networking
+* storage
+* any externalities (data ingestion from internet, license enforcement, live status reporting for collaboration, etc.)
+
+
+Example:
+This investigation has two core task sets.
+1. Generation of lava lamp video using diffusion models.
+2. Analysis of video from both generated and physical lava lamps.
+
+
+The first task set requires a GPU. The second task set can be assisted by a GPU or other accelerator.
+
+
+Runtime:
+This workload is containerized.
+
+
+Hardware, Accelerators, Memory, Instruction Set:
+The generation task set requires one GPU with at least 32 GB of dedicated RAM.
+The analysis task set may use one or more GPUs with at least 4 GB of dedicated RAM.
+The deployment will require 64 GB of RAM for in-memory caching.
+The analysis tools are compiled at deployment for the host system; instruction set does not matter.
+
+
+Network:
+No networking is required beyond that offered by the container orchestrator. Workload communication will be constrained to the project namespace and attached storage.
+
+
+Storage:
+3 TB of storage are required.
+* 1 TB of generated video
+* 1 TB of physical lava lamp video
+* 1 TB of scratch space for multi-stage processing and analysis
+
+
+Externalities:
+1 TB of video data will be transferred from the internet. No large outbound transfer is expected.
+
+
+
+
+
+
+
+
+User Accounts
+This must contain a principal investigator (PI) that is responsible for deciding how their resources are used and communicating with the MOC.
+This may contain additional users that the PI would like to share their resources with for collaboration
+
+
+Robby Stahl - rstahl@redhat.com - Principal Investigator
+Bob Wehadababyitsahominid - foomatic@redhat.com - User
+
+
+
+
+Additional Notes / Reading
+Anything that would help the MOC understand the project is appreciated. This information may uncover technical edge cases that must be triaged before approval.
+
+
+Example:
+https://www.cloudflare.com/learning/ssl/lava-lamp-encryption/
+"How do lava lamps help with Internet encryption?"
+
+
+
+
+Attachments
+Any diagrams or other material that may be required to understand the project.
+
+
+Example:
+None.
+
+
+
+
+# vim: wrap linebreak
