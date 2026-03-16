@@ -1,0 +1,13 @@
+# Bandit configuration file (YAML format)
+# https://bandit.readthedocs.io/en/latest/config.html
+
+# Exclude test directories from scanning
+exclude_dirs:
+  - '/tests/'
+  - '*/tests/*'
+  - '/test_*.py'
+  - '*/test_*.py'
+
+# Specify which tests to skip (if any)
+# Example: ['B101', 'B601']
+skips: []

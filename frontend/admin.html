@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOC Project Intake - Admin View</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Massachusetts Open Cloud</h1>
+            <h2>Project Intake Submissions</h2>
+            <nav class="admin-nav">
+                <a href="/" class="nav-link">← Back to Form</a>
+                <button id="refreshBtn" class="refresh-btn">⟳ Refresh</button>
+            </nav>
+        </header>
+
+        <div id="submissionsContainer">
+            <div id="loadingMessage" class="loading">Loading submissions...</div>
+            <div id="noSubmissionsMessage" class="no-data hidden">
+                No submissions found. <a href="/">Submit a new request</a>
+            </div>
+            <div id="submissionsList" class="submissions-list hidden"></div>
+        </div>
+
+        <div id="errorMessage" class="message error hidden"></div>
+    </div>
+
+    <script src="/static/js/admin.js"></script>
+</body>
+</html>

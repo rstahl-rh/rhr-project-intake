@@ -1,0 +1,23 @@
+# Gitleaks configuration file
+# https://github.com/gitleaks/gitleaks#configuration
+
+title = "RHR Project Intake Form - Gitleaks Config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowlist for false positives"
+paths = [
+    '''\.specify/''',
+    '''specs/''',
+    '''\.github/workflows/''',
+]
+
+# Example patterns to ignore
+regexes = [
+    # Ignore example/template values
+    '''example@example\.com''',
+    '''EXAMPLE_''',
+    '''TODO:''',
+]
