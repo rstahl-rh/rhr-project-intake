@@ -1,41 +1,60 @@
-# Git files
-.git
+# Git
+.git/
 .gitignore
 
-# Node modules (will be installed in container)
-webpage/node_modules
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
 
-# Environment files
-webpage/.env
-.env
+# Virtual environments
+venv/
+env/
+.venv/
 
-# Database files (should be mounted as volume)
+# Database files (will be mounted as volume)
 data/*.db
 data/*.db-journal
+data/*.db-shm
+data/*.db-wal
 
-# Documentation
-webpage/README.md
-agent-reading-list/
+# Environment variables
+.env
+.env.local
+.env.*
 
-# Build artifacts
-AGENT_TODO
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
 
-# IDE and editor files
+# IDEs
+.vscode/
+.idea/
 *.swp
 *.swo
-*~
-.vscode
-.idea
-
-# OS files
-.DS_Store
-Thumbs.db
 
 # Logs
 *.log
-npm-debug.log*
 
-# Temporary files
+# Documentation
+*.md
+!README.md
+
+# CI/CD
+.github/
+
+# Spec files
+specs/
+.specify/
+
+# Other
+.DS_Store
+Thumbs.db
 *.tmp
-*.temp
-*.nocommit

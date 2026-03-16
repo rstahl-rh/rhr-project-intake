@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOC Project Intake Form</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Massachusetts Open Cloud</h1>
+            <h2>Project Intake Request Form</h2>
+        </header>
+
+        <form id="intakeForm">
+            <div class="form-group">
+                <label for="project_name">Project Name *</label>
+                <input
+                    type="text"
+                    id="project_name"
+                    name="project_name"
+                    required
+                    placeholder="Example: PseudoLavaLamp Diffusion Model Study"
+                />
+                <small>Concise, descriptive, and locally unique</small>
+            </div>
+
+            <div class="form-group">
+                <label for="project_overview">Project Overview *</label>
+                <textarea
+                    id="project_overview"
+                    name="project_overview"
+                    required
+                    rows="5"
+                    placeholder="Example: Multiple diffusion models will be used to generate video of lava lamps. This video will be compared with video of actual lava lamps. The same analysis stack and methodology will be applied to both data sets (generated, physical). This work will determine if virtual lava lamps are a reasonable source of entropy when compared with actual lava lamps."
+                ></textarea>
+                <small>1-2 paragraphs summarizing what you want to do</small>
+            </div>
+
+            <div class="form-group">
+                <label for="administrative_info">Project Administrative Information *</label>
+                <textarea
+                    id="administrative_info"
+                    name="administrative_info"
+                    required
+                    rows="4"
+                    placeholder="Example:&#10;Requestor: Robby Stahl - rstahl@redhat.com&#10;Funding: &quot;867 - Five Three Oh Nine Investigations&quot;&#10;Oversight: Robby Stahl (Red Hat), Orran Krieger (Red Hat)"
+                ></textarea>
+                <small>Who wants resources? What is the source budget? Who should be notified?</small>
+            </div>
+
+            <div class="form-group">
+                <label for="timeline">Project Timeline *</label>
+                <textarea
+                    id="timeline"
+                    name="timeline"
+                    required
+                    rows="3"
+                    placeholder="Example: This project has a planned duration of one week. The start date must be on or before 2026-03-30."
+                ></textarea>
+                <small>When do you want to start, when do you plan to end? Any constraints?</small>
+            </div>
+
+            <div class="form-group">
+                <label for="technical_requirements">Technical Requirements *</label>
+                <textarea
+                    id="technical_requirements"
+                    name="technical_requirements"
+                    required
+                    rows="8"
+                    placeholder="Example:&#10;This investigation has two core task sets:&#10;1. Generation of lava lamp video using diffusion models&#10;2. Analysis of video from both generated and physical lava lamps&#10;&#10;Runtime: Containerized&#10;Hardware: GPU with 32GB RAM for generation, 4GB for analysis&#10;Memory: 64GB RAM for in-memory caching&#10;Network: Container orchestrator networking&#10;Storage: 3TB total (1TB generated, 1TB physical, 1TB scratch)&#10;Externalities: 1TB data transfer from internet"
+                ></textarea>
+                <small>Describe: runtime environment, hardware, networking, storage, externalities</small>
+            </div>
+
+            <div class="form-group">
+                <label for="user_accounts">User Accounts *</label>
+                <textarea
+                    id="user_accounts"
+                    name="user_accounts"
+                    required
+                    rows="3"
+                    placeholder="Example:&#10;Robby Stahl - rstahl@redhat.com - Principal Investigator&#10;Bob Wehadababyitsahominid - foomatic@redhat.com - User"
+                ></textarea>
+                <small>Principal Investigator (required) and additional collaborators</small>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Additional Notes / Reading</label>
+                <textarea
+                    id="notes"
+                    name="notes"
+                    rows="3"
+                    placeholder="Example: https://www.cloudflare.com/learning/ssl/lava-lamp-encryption/"
+                ></textarea>
+                <small>Anything that would help MOC understand the project</small>
+            </div>
+
+            <div class="form-group">
+                <label for="attachments">Attachments</label>
+                <textarea
+                    id="attachments"
+                    name="attachments"
+                    rows="2"
+                    placeholder="Example: None"
+                ></textarea>
+                <small>References to diagrams or other supporting materials</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">Submit Request</button>
+                <button type="reset" class="reset-btn">Clear Form</button>
+            </div>
+        </form>
+
+        <div id="message" class="message hidden"></div>
+    </div>
+
+    <script src="/static/js/form_field.js"></script>
+    <script src="/static/js/form.js"></script>
+</body>
+</html>

@@ -3,10 +3,14 @@
 
 # Environment variables
 webpage/.env
+.env
+.env.local
 
 # Database
 data/*.db
 data/*.db-journal
+data/*.db-shm
+data/*.db-wal
 
 # Node modules
 webpage/node_modules/
@@ -16,3 +20,53 @@ AGENT_TODO
 
 # Docker
 docker-compose.override.yml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Testing
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
