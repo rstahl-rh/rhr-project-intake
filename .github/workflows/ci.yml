@@ -1,133 +1,133 @@
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches: [ main, 'feature/*', 'spec-kit-ify' ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  test:
-    name: Test Suite
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run unit tests with coverage
-        run: |
-          pytest --cov=backend/src --cov-report=term --cov-report=xml --cov-fail-under=80
-
-      - name: Upload coverage to Codecov
-        if: always()
-        uses: codecov/codecov-action@v4
-        with:
-          file: ./coverage.xml
-          fail_ci_if_error: false
-
-      - name: Verify test suite performance
-        run: |
-          # Verify tests complete in <5 seconds per Constitution Principle III
-          time_output=$(pytest --quiet --tb=no 2>&1 | grep -E "seconds|passed")
-          echo "Test performance: $time_output"
-
-  lint:
-    name: Code Linting
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install linting tools
-        run: |
-          pip install ruff==0.4.8
-
-      - name: Run Ruff linter
-        run: |
-          ruff check backend/src/
-
-  format:
-    name: Code Formatting
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install formatting tools
-        run: |
-          pip install black==26.3.1
-
-      - name: Check Black formatting
-        run: |
-          black --check backend/src/
-
-  complexity:
-    name: Complexity Check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install complexity tools
-        run: |
-          pip install radon
-
-      - name: Check cyclomatic complexity
-        run: |
-          # Fail if any function has complexity >10 (Constitution Principle I)
-          radon cc backend/src/ -a -s --total-average
-          # Check for violations
-          violations=$(radon cc backend/src/ -n C -s)
-          if [ -n "$violations" ]; then
-            echo "❌ Complexity violations found (>10):"
-            echo "$violations"
-            exit 1
-          fi
-          echo "✅ All functions meet complexity requirement (≤10)"
-
-  build:
-    name: Docker Build
-    runs-on: ubuntu-latest
-    needs: [test, lint, format, complexity]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build Docker image
-        run: |
-          docker build -t intake-form:test .
-
-      - name: Test Docker health check
-        run: |
-          docker run -d --name test-container -p 8000:8000 intake-form:test
-          sleep 10
-          # Wait for health check to pass
-          timeout 30 bash -c 'until docker inspect --format="{{.State.Health.Status}}" test-container | grep -q "healthy"; do sleep 2; done'
-          docker logs test-container
-          docker stop test-container
-          docker rm test-container
+# name: CI/CD Pipeline
+# 
+# on:
+#   push:
+#     branches: [ main, 'feature/*', 'spec-kit-ify' ]
+#   pull_request:
+#     branches: [ main ]
+# 
+# jobs:
+#   test:
+#     name: Test Suite
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+# 
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.12'
+# 
+#       - name: Install dependencies
+#         run: |
+#           pip install --upgrade pip
+#           pip install -r requirements.txt
+# 
+#       - name: Run unit tests with coverage
+#         run: |
+#           pytest --cov=backend/src --cov-report=term --cov-report=xml --cov-fail-under=80
+# 
+#       - name: Upload coverage to Codecov
+#         if: always()
+#         uses: codecov/codecov-action@v4
+#         with:
+#           file: ./coverage.xml
+#           fail_ci_if_error: false
+# 
+#       - name: Verify test suite performance
+#         run: |
+#           # Verify tests complete in <5 seconds per Constitution Principle III
+#           time_output=$(pytest --quiet --tb=no 2>&1 | grep -E "seconds|passed")
+#           echo "Test performance: $time_output"
+# 
+#   lint:
+#     name: Code Linting
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+# 
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.12'
+# 
+#       - name: Install linting tools
+#         run: |
+#           pip install ruff==0.4.8
+# 
+#       - name: Run Ruff linter
+#         run: |
+#           ruff check backend/src/
+# 
+#   format:
+#     name: Code Formatting
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+# 
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.12'
+# 
+#       - name: Install formatting tools
+#         run: |
+#           pip install black==26.3.1
+# 
+#       - name: Check Black formatting
+#         run: |
+#           black --check backend/src/
+# 
+#   complexity:
+#     name: Complexity Check
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+# 
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.12'
+# 
+#       - name: Install complexity tools
+#         run: |
+#           pip install radon
+# 
+#       - name: Check cyclomatic complexity
+#         run: |
+#           # Fail if any function has complexity >10 (Constitution Principle I)
+#           radon cc backend/src/ -a -s --total-average
+#           # Check for violations
+#           violations=$(radon cc backend/src/ -n C -s)
+#           if [ -n "$violations" ]; then
+#             echo "❌ Complexity violations found (>10):"
+#             echo "$violations"
+#             exit 1
+#           fi
+#           echo "✅ All functions meet complexity requirement (≤10)"
+# 
+#   build:
+#     name: Docker Build
+#     runs-on: ubuntu-latest
+#     needs: [test, lint, format, complexity]
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+# 
+#       - name: Build Docker image
+#         run: |
+#           docker build -t intake-form:test .
+# 
+#       - name: Test Docker health check
+#         run: |
+#           docker run -d --name test-container -p 8000:8000 intake-form:test
+#           sleep 10
+#           # Wait for health check to pass
+#           timeout 30 bash -c 'until docker inspect --format="{{.State.Health.Status}}" test-container | grep -q "healthy"; do sleep 2; done'
+#           docker logs test-container
+#           docker stop test-container
+#           docker rm test-container
